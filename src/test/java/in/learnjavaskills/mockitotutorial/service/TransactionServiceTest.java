@@ -292,4 +292,17 @@ class TransactionServiceTest
                 .saveNetBankingTransaction(ArgumentMatchers.any(), ArgumentMatchers.any());
     }
 
+    /**
+     * Contractor Mocking
+     */
+
+    @Test
+    void upiTransaction() {
+        try (MockedConstruction<Account> accountMockedConstruction = Mockito.mockConstruction(Account.class, (mock, context) ->
+              Mockito.when(mock.isUpiAllowed(ArgumentMatchers.anyLong(), ArgumentMatchers.any()))
+                      .thenReturn(true))) {
+            boolean transactionStatus = transactionService.upiPayment(1234567890L, BigDecimal.TEN);
+            assertTrue(transactionStatus);
+        }
+    }
 }

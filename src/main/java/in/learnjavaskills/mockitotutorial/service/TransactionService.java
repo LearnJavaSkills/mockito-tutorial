@@ -86,6 +86,16 @@ public class TransactionService
         }
     }
 
+    public boolean upiPayment(Long accountNumber, BigDecimal amount) {
+        Account account = new Account();
+        boolean upiAllowed = account.isUpiAllowed(accountNumber, amount);
+        if (upiAllowed) {
+            System.out.println("transaction completed");
+            return true;
+        }
+        return false;
+    }
+
     private boolean authenticateUser(String username, String password) {
         if (Objects.nonNull(username) && Objects.nonNull(password))
             return true;
